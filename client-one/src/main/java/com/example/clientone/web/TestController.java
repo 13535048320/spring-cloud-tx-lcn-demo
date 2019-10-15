@@ -5,6 +5,7 @@ import com.example.clientone.feign.FeignService;
 import com.example.clientone.service.ITestService;
 import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,7 +32,6 @@ public class TestController {
     @GetMapping("testInsert")
     public String testInsert() {
         this.testService.insertTest("zzc");
-        int a = 1 / 0;
         return "OK";
     }
 
@@ -46,6 +46,11 @@ public class TestController {
     public String testFeignInsert() {
         this.feignService.testFeignInsert();
 //        int zero = 1 / 0;
+        return "OK";
+    }
+
+    @GetMapping("/testRibbon")
+    public String testRibbon(){
         return "OK";
     }
 }

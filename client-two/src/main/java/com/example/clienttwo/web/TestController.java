@@ -4,6 +4,7 @@ import com.example.clienttwo.service.ITestService;
 import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -22,6 +23,12 @@ public class TestController {
     public String testFeignInsert(){
         testService.insertTest("zzc-1");
 //        int zero = 1 / 0;
+        return "OK";
+    }
+
+    @GetMapping("/testFeignInsert/{name}")
+    public String testFeignInsert(@PathVariable("name") String name){
+        testService.insertTest(name);
         return "OK";
     }
 }

@@ -13,4 +13,9 @@ public class FeignFallBack implements FeignService {
     public String testFeignInsert() {
         return "error";
     }
+
+    @Override
+    public String testFeignInsert(String name){
+        return "error! Name: " + name;
+    }
 }
