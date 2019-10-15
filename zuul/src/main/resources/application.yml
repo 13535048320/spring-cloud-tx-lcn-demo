@@ -1,0 +1,41 @@
+server:
+  port: 6900
+
+spring:
+  application:
+    name: zuul
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:6789/eureka/
+  instance:
+    ip-address: true
+    instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${spring.application.instance_id:${server.port}}
+    hostname: ${spring.cloud.client.ip-address}
+    lease-renewal-interval-in-seconds: 10
+    lease-expiration-duration-in-seconds: 30
+
+zuul:
+  host:
+    connect-timeout-millis: 6000
+    socket-timeout-millis: 10000
+  retryable: true
+
+ribbon:
+  ReadTimeout: 10000
+  SocketTimeout: 10000
+  ConnectTimeout: 10000
+#  MaxAutoRetries: 1
+#  MaxAutoRetriesNextServer: 1
+
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true
+        isolation:
+          thread:
+            timeoutInMilliseconds: 40000 # ribbonTimeout = (RibbonReadTimeout + RibbonConnectTimeout) * (MaxAutoRetries + 1) * (MaxAutoRetriesNextServer + 1)
+                                         # MaxAutoRetries 默认为0，MaxAutoRetriesNextServer 默认为1，所以我这里的具体值为：（10000+10000）*（0+1）*（1+1）=40000。
